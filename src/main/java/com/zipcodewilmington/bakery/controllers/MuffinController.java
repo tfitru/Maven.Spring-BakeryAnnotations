@@ -5,9 +5,7 @@ import com.zipcodewilmington.bakery.services.MuffinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 
@@ -20,23 +18,23 @@ public class MuffinController {
         this.service = service;
     }
 
-    @RequestMapping
+    @GetMapping("/muffins/")
     public ResponseEntity<Iterable<Muffin>> index() {
         return new ResponseEntity<>(service.index(), HttpStatus.OK);
     }
-    @RequestMapping
+    @GetMapping("/muffins/{id}")
     public ResponseEntity<Muffin> show(@PathVariable Long id) {
         return new ResponseEntity<>(service.show(id), HttpStatus.OK);
     }
-    @RequestMapping
-    public ResponseEntity<Muffin> create(@PathVariable Muffin baker) {
+    @PostMapping("/muffins/")
+    public ResponseEntity<Muffin> create(@RequestBody Muffin baker) {
         return new ResponseEntity<>(service.create(baker), HttpStatus.CREATED);
     }
-    @RequestMapping
-    public ResponseEntity<Muffin> update(@PathVariable Long id, Muffin baker) {
+    @PutMapping("/muffins/")
+    public ResponseEntity<Muffin> update(@PathVariable Long id, @RequestBody Muffin baker) {
         return new ResponseEntity<>(service.update(id, baker), HttpStatus.OK);
     }
-    @RequestMapping
+    @DeleteMapping("/muffins/")
     public ResponseEntity<Boolean> destroy(@PathVariable Long id) {
         return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
     }

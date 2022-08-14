@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 
@@ -21,27 +19,27 @@ public class BakerController {
         this.service = service;
     }
 
-    @RequestMapping
+    @GetMapping("/bakers/")
     public ResponseEntity<Iterable<Baker>> index() {
         return new ResponseEntity<>(service.index(), HttpStatus.OK);
     }
 
-    @RequestMapping
+    @GetMapping("/bakers/{id}")
     public ResponseEntity<Baker> show(@PathVariable Long id) {
         return new ResponseEntity<>(service.show(id), HttpStatus.OK);
     }
 
-    @RequestMapping
-    public ResponseEntity<Baker> create(Baker baker) {
+    @PostMapping("/bakers/")
+    public ResponseEntity<Baker> create(@RequestBody Baker baker) {
         return new ResponseEntity<>(service.create(baker), HttpStatus.CREATED);
     }
 
-    @RequestMapping
-    public ResponseEntity<Baker> update(@PathVariable Long id, Baker baker) {
+    @PutMapping("/bakers/")
+    public ResponseEntity<Baker> update(@PathVariable Long id, @RequestParam Baker baker) {
         return new ResponseEntity<>(service.update(id, baker), HttpStatus.OK);
     }
 
-    @RequestMapping
+    @DeleteMapping("/bakers/{id}")
     public ResponseEntity<Boolean> destroy(@PathVariable Long id) {
         return new ResponseEntity<>(service.delete(id), HttpStatus.OK);
     }
